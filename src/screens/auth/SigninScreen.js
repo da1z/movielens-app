@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { View } from 'react-native';
 import { Input, Button } from 'react-native-elements';
 import { authenticate } from '../../actions/auth';
-import { login, getMe } from '../../api/movielens';
 
 const SigninScreen = ({ isLoading, ...props }) => {
   const [username, setUsername] = useState('');

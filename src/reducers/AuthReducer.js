@@ -1,5 +1,5 @@
 import {
-  RESTORE_USER,
+  RESTORE_USER_SUCCESS,
   LOGIN,
   LOGIN_SUCCESS,
   LOGIN_FAILURE
@@ -17,13 +17,20 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case RESTORE_USER:
-      return { ...state, user: action.payload.user };
+    case RESTORE_USER_SUCCESS: {
+      const { user, cookie } = action.payload;
+      return {
+        ...state,
+        user,
+        cookie
+      };
+    }
     case LOGIN:
       return { ...state, isAuthenticating: true, isLoginError: false };
-    case LOGIN_SUCCESS:
+    case LOGIN_SUCCESS: {
       const { user, cookie } = action.payload;
       return { ...state, isAuthenticating: false, user, cookie };
+    }
     case LOGIN_FAILURE:
       return {
         ...state,

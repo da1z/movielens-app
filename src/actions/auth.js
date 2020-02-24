@@ -2,18 +2,31 @@ import {
   RESTORE_USER,
   LOGIN,
   LOGIN_SUCCESS,
-  LOGIN_Failure,
-  LOGIN_FAILURE
+  LOGIN_FAILURE,
+  RESTORE_USER_SUCCESS
 } from './types/auth';
 
 import { AsyncStorage } from 'react-native';
 import { login as apiLogin, getMe } from '../api/movielens';
 export const AUTH_COOKIE_KEY = 'ml_cookie_key';
 
-export const restoreUser = ({ user, cookie }) => {
-  return {
-    type: RESTORE_USER,
-    payload: { user, cookie }
+export const restoreUser = () => {
+  return async dispatch => {
+    let cookie;
+    try {
+      cookie = await AsyncStorage.getItem(AUTH_COOKIE_KEY);
+    } catch (error) {
+      //error getting cookie from async storage TODO: better logging
+    }
+    if (cookie) {
+      //validate cookie
+      try {
+        const user = await getMe(cookie);
+        dispatch(restoreUserSuccess({ user, cookie }));
+      } catch (error) {
+        //cookie not valid, clear AsyncStorage
+      }
+    }
   };
 };
 
@@ -30,6 +43,13 @@ export const authenticate = (username, password) => {
       }
       dispatch(loginSuccess(cookie, user));
     } catch (err) {}
+  };
+};
+
+const restoreUserSuccess = ({ user, cookie }) => {
+  return {
+    type: RESTORE_USER_SUCCESS,
+    payload: { user, cookie }
   };
 };
 
