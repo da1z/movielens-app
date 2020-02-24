@@ -1,9 +1,9 @@
 import {
-  RESTORE_USER,
   LOGIN,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
-  RESTORE_USER_SUCCESS
+  RESTORE_USER_SUCCESS,
+  LOGOUT
 } from './types/auth';
 
 import { AsyncStorage } from 'react-native';
@@ -43,6 +43,13 @@ export const authenticate = (username, password) => {
       }
       dispatch(loginSuccess(cookie, user));
     } catch (err) {}
+  };
+};
+
+export const logout = () => {
+  AsyncStorage.removeItem(AUTH_COOKIE_KEY);
+  return {
+    type: LOGOUT
   };
 };
 

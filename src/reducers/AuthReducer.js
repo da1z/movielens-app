@@ -2,7 +2,8 @@ import {
   RESTORE_USER_SUCCESS,
   LOGIN,
   LOGIN_SUCCESS,
-  LOGIN_FAILURE
+  LOGIN_FAILURE,
+  LOGOUT
 } from '../actions/types/auth';
 
 const INITIAL_STATE = {
@@ -38,6 +39,8 @@ export default (state = INITIAL_STATE, action) => {
         isLoginError: true,
         loginErrorMessage: action.payload.errorMessage
       };
+    case LOGOUT:
+      return { ...INITIAL_STATE };
     default:
       return state;
   }
