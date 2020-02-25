@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Provider, connect } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import SplashScreen from './src/screens/auth/SplashScreen';
 import configureStore from './src/configureStore';
 import LoginNavigation from './src/navigation/LoginNavigation';
@@ -29,9 +30,11 @@ const App = connect(mapStateToProp, { restoreUser })(props => {
   }
 
   return (
-    <NavigationContainer>
-      {props.auth.user ? <MainNavigation /> : <LoginNavigation />}
-    </NavigationContainer>
+    <SafeAreaProvider>
+      <NavigationContainer>
+        {props.auth.user ? <MainNavigation /> : <LoginNavigation />}
+      </NavigationContainer>
+    </SafeAreaProvider>
   );
 });
 

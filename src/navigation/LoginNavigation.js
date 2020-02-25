@@ -7,7 +7,11 @@ const LoginNavigation = createStackNavigator();
 
 export default () => {
   return (
-    <LoginNavigation.Navigator>
+    <LoginNavigation.Navigator
+      screenOptions={{
+        headerShown: false
+      }}
+    >
       <LoginNavigation.Screen
         name="Signin"
         component={SigninScreen}
