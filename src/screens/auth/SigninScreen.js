@@ -27,6 +27,7 @@ const SigninScreen = ({ isLoading, ...props }) => {
         ></Input>
       </View>
       <Button
+        style={styles.signinButton}
         title="Sign In"
         onPress={() => {
           props.authenticate(username, password);
@@ -57,7 +58,10 @@ const styles = StyleSheet.create({
     fontSize: 24,
     marginTop: 5
   },
-  inputForm: { marginTop: 20 }
+  inputForm: { marginTop: 20 },
+  signinButton: {
+    marginTop: 20
+  }
 });
 const mapStateToProps = state => {
   return { isLoading: state.auth.isAuthenticating };

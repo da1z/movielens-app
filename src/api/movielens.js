@@ -62,6 +62,10 @@ export function getMe(cookie) {
   return get(cookie, 'users/me').then(r => r.data);
 }
 
+export function getFrontpage(cookie) {
+  return get(cookie, 'users/me/frontpage').then(r => r.data);
+}
+
 export function getGenres(cookie) {
   return get(cookie, 'movies/genres');
 }

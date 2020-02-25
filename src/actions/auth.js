@@ -42,7 +42,9 @@ export const authenticate = (username, password) => {
         //todo loging cookie storing failed
       }
       dispatch(loginSuccess(cookie, user));
-    } catch (err) {}
+    } catch (err) {
+      dispatch(loginFailure(err.message));
+    }
   };
 };
 

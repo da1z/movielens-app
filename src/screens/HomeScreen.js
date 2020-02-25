@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, Text } from 'react-native';
+import { View, Text, ActivityIndicator, StyleSheet } from 'react-native';
 import { Button } from 'react-native-elements';
-import { logout } from '../actions/auth';
+import { loadFront } from '../actions/movies';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { colors } from '../theme';
 
 class HomeScreen extends Component {
   constructor(props) {
@@ -10,14 +12,45 @@ class HomeScreen extends Component {
     this.state = {};
   }
 
+  componentDidMount() {
+    this.props.loadFront(this.props.cookie);
+  }
+
   render() {
+    const { isLoading } = this.props;
+    console.log(isLoading);
     return (
-      <View>
-        <Text> HomeScreen </Text>
-        <Button title="Logout" onPress={this.props.logout}></Button>
-      </View>
+      <>
+        {isLoading ? (
+          <View style={styles.activityIndicatorContainer}>
+            <ActivityIndicator
+              size="large"
+              color={colors.primary}
+            ></ActivityIndicator>
+          </View>
+        ) : (
+          <SafeAreaView>
+            <View>
+              <Text> HomeScreen </Text>
+            </View>
+          </SafeAreaView>
+        )}
+      </>
     );
   }
 }
 
-export default connect(null, { logout })(HomeScreen);
+const mapStateToProps = state => {
+  return {
+    isLoading: state.movies.isFrontLoading,
+    cookie: state.auth.cookie
+  };
+};
+
+const styles = StyleSheet.create({
+  activityIndicatorContainer: {
+    flex: 1,
+    justifyContent: 'center'
+  }
+});
+export default connect(mapStateToProps, { loadFront })(HomeScreen);
