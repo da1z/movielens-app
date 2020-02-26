@@ -8,7 +8,6 @@ import {
 
 const INITIAL_STATE = {
   user: null,
-  cookie: null,
 
   isAuthenticating: false,
 
@@ -19,18 +18,17 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case RESTORE_USER_SUCCESS: {
-      const { user, cookie } = action.payload;
+      const { user } = action.payload;
       return {
         ...state,
-        user,
-        cookie
+        user
       };
     }
     case LOGIN:
       return { ...state, isAuthenticating: true, isLoginError: false };
     case LOGIN_SUCCESS: {
-      const { user, cookie } = action.payload;
-      return { ...state, isAuthenticating: false, user, cookie };
+      const { user } = action.payload;
+      return { ...state, isAuthenticating: false, user };
     }
     case LOGIN_FAILURE:
       return {

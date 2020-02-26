@@ -3,7 +3,7 @@ import axios from 'axios';
 const api = axios.create({
   baseURL: 'https://movielens.org/api/',
   timeout: 30000, // 30seconds
-  withCredentials: false
+  withCredentials: true
   // headers: {
   //   Accept: 'application/json, text/plain, */*',
   //   'Accept-Encoding': 'gzip, deflate',
@@ -24,6 +24,10 @@ export function login(userName, password) {
   return api
     .post('sessions', { userName, password }, headers)
     .then(response => response.headers['set-cookie'][0]);
+}
+
+export function logout() {
+  api.delete('sessions/me').then(response => response.data);
 }
 
 function createConfig(cookie, params, data) {

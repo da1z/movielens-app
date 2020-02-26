@@ -1,10 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, Text, ActivityIndicator, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  ActivityIndicator,
+  StyleSheet,
+  FlatList
+} from 'react-native';
 import { Button } from 'react-native-elements';
 import { loadFront } from '../actions/movies';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors } from '../theme';
+import MovieListItem from '../components/MovieListItem';
 
 class HomeScreen extends Component {
   constructor(props) {
@@ -13,12 +20,11 @@ class HomeScreen extends Component {
   }
 
   componentDidMount() {
-    this.props.loadFront(this.props.cookie);
+    this.props.loadFront();
   }
 
   render() {
-    const { isLoading } = this.props;
-    console.log(isLoading);
+    const { isLoading, moviesData } = this.props;
     return (
       <>
         {isLoading ? (
@@ -31,7 +37,13 @@ class HomeScreen extends Component {
         ) : (
           <SafeAreaView>
             <View>
-              <Text> HomeScreen </Text>
+              <FlatList
+                data={moviesData}
+                keyExtractor={item => item.title}
+                renderItem={({ item }) => (
+                  <MovieListItem moviesList={item}></MovieListItem>
+                )}
+              ></FlatList>
             </View>
           </SafeAreaView>
         )}
@@ -43,7 +55,7 @@ class HomeScreen extends Component {
 const mapStateToProps = state => {
   return {
     isLoading: state.movies.isFrontLoading,
-    cookie: state.auth.cookie
+    moviesData: state.movies.moviesData
   };
 };
 

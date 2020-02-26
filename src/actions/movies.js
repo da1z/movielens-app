@@ -5,12 +5,12 @@ import {
 } from './types/movies';
 import { getFrontpage } from '../api/movielens';
 
-export const loadFront = cookie => {
+export const loadFront = () => {
   console.log('load');
   return async dispatch => {
     dispatch(loadFrontStart());
     try {
-      const moviesData = await getFrontpage(cookie);
+      const moviesData = await getFrontpage();
       dispatch(loadFrontSuccess(moviesData.listOfSearchResults));
     } catch (error) {
       console.log(error);

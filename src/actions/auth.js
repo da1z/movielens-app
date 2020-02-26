@@ -7,25 +7,19 @@ import {
 } from './types/auth';
 
 import { AsyncStorage } from 'react-native';
-import { login as apiLogin, getMe } from '../api/movielens';
-export const AUTH_COOKIE_KEY = 'ml_cookie_key';
+import {
+  login as apiLogin,
+  getMe,
+  logout as apiLogout
+} from '../api/movielens';
 
 export const restoreUser = () => {
   return async dispatch => {
-    let cookie;
     try {
-      cookie = await AsyncStorage.getItem(AUTH_COOKIE_KEY);
+      const user = await getMe();
+      dispatch(restoreUserSuccess({ user }));
     } catch (error) {
-      //error getting cookie from async storage TODO: better logging
-    }
-    if (cookie) {
-      //validate cookie
-      try {
-        const user = await getMe(cookie);
-        dispatch(restoreUserSuccess({ user, cookie }));
-      } catch (error) {
-        //cookie not valid, clear AsyncStorage
-      }
+      //restore failed dispatch restore failed
     }
   };
 };
@@ -34,14 +28,9 @@ export const authenticate = (username, password) => {
   return async dispatch => {
     dispatch(login());
     try {
-      const cookie = await apiLogin(username, password);
-      const user = await getMe(cookie);
-      try {
-        AsyncStorage.setItem(AUTH_COOKIE_KEY, cookie);
-      } catch (error) {
-        //todo loging cookie storing failed
-      }
-      dispatch(loginSuccess(cookie, user));
+      await apiLogin(username, password);
+      const user = await getMe();
+      dispatch(loginSuccess(user));
     } catch (err) {
       dispatch(loginFailure(err.message));
     }
@@ -49,16 +38,18 @@ export const authenticate = (username, password) => {
 };
 
 export const logout = () => {
-  AsyncStorage.removeItem(AUTH_COOKIE_KEY);
-  return {
-    type: LOGOUT
+  return async dispatch => {
+    await apiLogout();
+    dispatch({
+      type: LOGOUT
+    });
   };
 };
 
-const restoreUserSuccess = ({ user, cookie }) => {
+const restoreUserSuccess = ({ user }) => {
   return {
     type: RESTORE_USER_SUCCESS,
-    payload: { user, cookie }
+    payload: { user }
   };
 };
 
@@ -68,12 +59,11 @@ const login = () => {
   };
 };
 
-const loginSuccess = (cookie, user) => {
+const loginSuccess = user => {
   return {
     type: LOGIN_SUCCESS,
     payload: {
-      user,
-      cookie
+      user
     }
   };
 };
