@@ -6,7 +6,6 @@ import {
 import { getFrontpage } from '../api/movielens';
 
 export const loadFront = () => {
-  console.log('load');
   return async dispatch => {
     dispatch(loadFrontStart());
     try {

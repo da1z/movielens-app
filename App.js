@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Provider, connect } from 'react-redux';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, DarkTheme } from '@react-navigation/native';
+import { ThemeProvider } from 'react-native-elements';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import SplashScreen from './src/screens/auth/SplashScreen';
 import configureStore from './src/configureStore';
 import LoginNavigation from './src/navigation/LoginNavigation';
 import { restoreUser } from './src/actions/auth';
 import MainNavigation from './src/navigation/MainNavigation';
+import { colors, rnTheme, elementsTheme } from './src/theme';
 
 const store = configureStore();
 
@@ -31,9 +33,11 @@ const App = connect(mapStateToProp, { restoreUser })(props => {
 
   return (
     <SafeAreaProvider>
-      <NavigationContainer>
-        {props.auth.user ? <MainNavigation /> : <LoginNavigation />}
-      </NavigationContainer>
+      <ThemeProvider theme={elementsTheme}>
+        <NavigationContainer theme={rnTheme}>
+          {props.auth.user ? <MainNavigation /> : <LoginNavigation />}
+        </NavigationContainer>
+      </ThemeProvider>
     </SafeAreaProvider>
   );
 });

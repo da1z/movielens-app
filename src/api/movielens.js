@@ -31,16 +31,14 @@ export function logout() {
 }
 
 function createConfig(cookie, params, data) {
-  const config = {};
+  const config = data ? { ...data } : {};
   if (cookie) {
     config['headers'] = { cookie };
   }
   if (params) {
     config['params'] = params;
   }
-  if (data) {
-    config['data'] = data;
-  }
+
   return config;
 }
 
@@ -58,7 +56,7 @@ export function post(cookie, resource, data) {
 
 export function del(cookie, resource) {
   return api
-    .del(resource, createConfig(cookie))
+    .delete(resource, createConfig(cookie))
     .then(response => response.data);
 }
 
@@ -152,10 +150,16 @@ export function getMyStats(cookie) {
   return get(cookie, 'users/me/ratings/stats');
 }
 
-export function rate(cookie, movieId, rating) {
+export function rate(cookie, movieData, newRating) {
+  const {
+    movie: { movieId },
+    movieUserData: { prediction, rating }
+  } = movieData;
   return post(cookie, 'users/me/ratings', {
     movieId,
-    rating
+    rating: newRating,
+    predictedRating: prediction,
+    previousRating: rating
   });
 }
 
@@ -175,6 +179,10 @@ export function hide(cookie, movieId) {
 
 export function unhide(cookie, movieId) {
   return del(cookie, `users/me/ratings/${movieId}`);
+}
+
+export function composePictureUrl(tail) {
+  return 'https://image.tmdb.org/t/p/original' + tail;
 }
 
 export default {
