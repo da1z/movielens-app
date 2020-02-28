@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
   title: {
     marginTop: 10,
     marginBottom: 5,
+    marginLeft: 5,
     fontSize: 22,
     color: colors.primary,
     textTransform: 'capitalize'

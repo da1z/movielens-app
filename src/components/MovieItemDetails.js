@@ -35,7 +35,9 @@ const MovieItemDetails = ({
       <Image
         style={styles.poster}
         containerStyle={styles.posterContainer}
-        source={{ uri: composePictureUrl(movie.posterPath) }}
+        source={{
+          uri: composePictureUrl(movie.posterPath)
+        }}
       ></Image>
       <Text style={styles.title}>{movie.title}</Text>
       <View style={styles.ratingsContainer}>

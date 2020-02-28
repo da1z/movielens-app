@@ -1,16 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {
-  View,
-  ActivityIndicator,
-  StyleSheet,
-  FlatList,
-  RefreshControl
-} from 'react-native';
+import { View, FlatList, RefreshControl } from 'react-native';
 import { loadFront } from '../actions/movies';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors } from '../theme';
 import MovieListItem from '../components/MovieListItem';
+import ActivityIndicator from '../components/common/ActivityIndicator';
 
 class HomeScreen extends Component {
   constructor(props) {
@@ -34,16 +29,8 @@ class HomeScreen extends Component {
 
   render() {
     const { isLoading, moviesData } = this.props;
-    if (this.state.isFirstLoad && isLoading)
-      return (
-        <View style={styles.activityIndicatorContainer}>
-          <ActivityIndicator
-            size="large"
-            animating={true}
-            color={colors.primary}
-          ></ActivityIndicator>
-        </View>
-      );
+    
+    if (this.state.isFirstLoad && isLoading) return <ActivityIndicator />;
 
     return (
       <SafeAreaView>
@@ -74,10 +61,4 @@ const mapStateToProps = state => {
   };
 };
 
-const styles = StyleSheet.create({
-  activityIndicatorContainer: {
-    flex: 1,
-    justifyContent: 'center'
-  }
-});
 export default connect(mapStateToProps, { loadFront })(HomeScreen);

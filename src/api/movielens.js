@@ -69,7 +69,7 @@ export function getFrontpage(cookie) {
 }
 
 export function getMovie(cookie, movieId) {
-  return get(cookie, `movies/${movieId}`)
+  return get(cookie, `movies/${movieId}`);
 }
 
 export function getGenres(cookie) {
@@ -154,8 +154,7 @@ export function getMyStats(cookie) {
   return get(cookie, 'users/me/ratings/stats');
 }
 
-export function rate(cookie, {movieId, rating, prediction, previousRating}) {
-
+export function rate(cookie, { movieId, rating, prediction, previousRating }) {
   return post(cookie, 'users/me/ratings', {
     movieId,
     rating: rating,
@@ -183,6 +182,10 @@ export function unhide(cookie, movieId) {
 }
 
 export function composePictureUrl(tail) {
+  return 'https://image.tmdb.org/t/p/w500/' + tail;
+}
+
+export function composeOriginalPictureUrl(tail) {
   return 'https://image.tmdb.org/t/p/original' + tail;
 }
 

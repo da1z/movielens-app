@@ -4,7 +4,8 @@ const colors = {
   backgroundColor: '#2D3142',
   cardColor: '#121212',
   borderColor: '#272729',
-  textColor: '#F6F7EB'
+  textColor: '#F6F7EB',
+  textColor2: '#B3B4AB'
 };
 
 const elementsTheme = {

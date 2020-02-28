@@ -56,8 +56,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 5
   },
   pictureContainer: {
-    width: 120,
-    height: 180,
+    width: 110,
+    aspectRatio: 2 / 3,
     justifyContent: 'center',
     borderWidth: 0.5
   },
@@ -66,7 +66,8 @@ const styles = StyleSheet.create({
   },
   ratingContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    width: 110
   }
 });
 

@@ -5,7 +5,9 @@ import { colors } from '../../theme';
 
 export default ({ style, ...props }) => (
   <Input
-    style={[style, styles.input]}
+    style={style}
+    inputStyle={styles.inputStyle}
+    placeholderTextColor={colors.secondary}
     inputContainerStyle={styles.container}
     autoCapitalize="none"
     autoCorrect={false}
@@ -19,5 +21,5 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     borderBottomWidth: 1.5
   },
-  input: {}
+  inputStyle: { color: colors.textColor }
 });
