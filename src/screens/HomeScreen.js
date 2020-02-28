@@ -16,12 +16,16 @@ class HomeScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isRefreshing: false
+      isFirstLoad: true
     };
   }
 
   componentDidMount() {
-    this.props.loadFront();
+    this.props
+      .loadFront()
+      .then(() =>
+        this.setState(prevState => ({ ...prevState, isFirstLoad: false }))
+      );
   }
 
   onRefresh = () => {
@@ -30,6 +34,17 @@ class HomeScreen extends Component {
 
   render() {
     const { isLoading, moviesData } = this.props;
+    if (this.state.isFirstLoad && isLoading)
+      return (
+        <View style={styles.activityIndicatorContainer}>
+          <ActivityIndicator
+            size="large"
+            animating={true}
+            color={colors.primary}
+          ></ActivityIndicator>
+        </View>
+      );
+
     return (
       <SafeAreaView>
         <View>

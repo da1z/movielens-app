@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Input } from 'react-native-elements';
-import { colors } from '../theme';
+import { colors } from '../../theme';
 
 export default ({ style, ...props }) => (
   <Input

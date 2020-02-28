@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { Text } from 'react-native-elements';
-import { colors } from '../theme';
+import { colors } from '../../theme';
 
 const TouchableText = ({ onPress, children, style, textStyle }) => (
   <TouchableOpacity onPress={onPress} style={[style]}>

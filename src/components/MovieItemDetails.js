@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { ScrollView, StyleSheet, View, TouchableOpacity } from 'react-native';
 import { Text, Image, AirbnbRating } from 'react-native-elements';
-import TouchableText from './TouchableText';
+import TouchableText from './common/TouchableText';
 import { Ionicons } from '@expo/vector-icons';
 import { colors } from '../theme';
 import { composePictureUrl, rate, unhide } from '../api/movielens';
-import MovielensRating from './MovielensRating';
-import UserRating from './UserRating';
+import MovielensRating from './common/MovielensRating';
+import UserRating from './common/UserRating';
 
 const MovieItemDetails = ({ itemData, onClose }) => {
   const [rating, setRating] = useState(itemData.movieUserData.rating);
@@ -59,6 +59,15 @@ const MovieItemDetails = ({ itemData, onClose }) => {
           Unrate
         </TouchableText>
       ) : null}
+      <Text>{itemData.movie.plotSummary}</Text>
+      <Text>
+        Cast:{' '}
+        {(itemData.movie.actors.length > 5
+          ? itemData.movie.actors.slice(0, 5)
+          : itemData.movie.actors
+        ).join(', ')}
+      </Text>
+      <Text>Directors: {itemData.movie.directors.join(', ')}</Text>
     </ScrollView>
   );
 };

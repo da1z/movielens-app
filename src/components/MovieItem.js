@@ -6,8 +6,8 @@ import { colors } from '../theme';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { composePictureUrl } from '../api/movielens';
 import MovieItemDetails from './MovieItemDetails';
-import MovielensRating from './MovielensRating';
-import UserRating from './UserRating';
+import MovielensRating from './common/MovielensRating';
+import UserRating from './common/UserRating';
 
 const MovieItem = ({ movieData }) => {
   const [isShowingDetails, setIsShowingDetails] = useState(false);
