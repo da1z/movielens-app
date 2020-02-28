@@ -1,15 +1,24 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import { ScrollView, StyleSheet, View, TouchableOpacity } from 'react-native';
 import { Text, Image, AirbnbRating } from 'react-native-elements';
 import TouchableText from './common/TouchableText';
 import { Ionicons } from '@expo/vector-icons';
 import { colors } from '../theme';
-import { composePictureUrl, rate, unhide } from '../api/movielens';
+import { composePictureUrl } from '../api/movielens';
+import { rateMovie, unrateMovie } from '../actions/movies';
 import MovielensRating from './common/MovielensRating';
 import UserRating from './common/UserRating';
 
-const MovieItemDetails = ({ itemData, onClose }) => {
-  const [rating, setRating] = useState(itemData.movieUserData.rating);
+const MovieItemDetails = ({
+  movie,
+  movieUserData,
+  isLoading,
+  rateMovie,
+  unrateMovie,
+  onClose
+}) => {
+  if (isLoading) return null;
   return (
     <ScrollView>
       <TouchableOpacity onPress={onClose}>
@@ -26,48 +35,44 @@ const MovieItemDetails = ({ itemData, onClose }) => {
       <Image
         style={styles.poster}
         containerStyle={styles.posterContainer}
-        source={{ uri: composePictureUrl(itemData.movie.posterPath) }}
+        source={{ uri: composePictureUrl(movie.posterPath) }}
       ></Image>
-      <Text style={styles.title}>{itemData.movie.title}</Text>
+      <Text style={styles.title}>{movie.title}</Text>
       <View style={styles.ratingsContainer}>
-        <MovielensRating rating={itemData.movieUserData.prediction} />
-        <Text style={styles.releaseYear}>{itemData.movie.releaseYear}</Text>
-        <Text style={styles.mpaa}>{itemData.movie.mpaa}</Text>
-        <UserRating rating={itemData.movie.avgRating} />
+        <MovielensRating rating={movieUserData.prediction} />
+        <Text style={styles.releaseYear}>{movie.releaseYear}</Text>
+        {movie.mpaa ? <Text style={styles.mpaa}>{movie.mpaa}</Text> : null}
+        <UserRating rating={movie.avgRating} />
       </View>
 
       <AirbnbRating
         showRating={false}
-        defaultRating={Math.round(rating)}
+        defaultRating={Math.round(movieUserData.rating)}
         selectedColor={colors.primary}
         onFinishRating={r => {
-          rate(null, itemData, r);
-          itemData.movieUserData.rating = r;
-          setRating(r);
+          rateMovie(movie.movieId, r);
         }}
       />
-      {rating ? (
+      {movieUserData.rating ? (
         <TouchableText
           style={styles.unrate}
           textStyle={styles.unrateText}
           onPress={() => {
-            unhide(null, itemData.movie.movieId);
-            setRating(null);
-            itemData.movieUserData.rating = null;
+            unrateMovie(movie.movieId);
           }}
         >
           Unrate
         </TouchableText>
       ) : null}
-      <Text>{itemData.movie.plotSummary}</Text>
+      <Text>{movie.plotSummary}</Text>
       <Text>
         Cast:{' '}
-        {(itemData.movie.actors.length > 5
-          ? itemData.movie.actors.slice(0, 5)
-          : itemData.movie.actors
+        {(movie.actors.length > 5
+          ? movie.actors.slice(0, 5)
+          : movie.actors
         ).join(', ')}
       </Text>
-      <Text>Directors: {itemData.movie.directors.join(', ')}</Text>
+      <Text>Directors: {movie.directors.join(', ')}</Text>
     </ScrollView>
   );
 };
@@ -113,4 +118,12 @@ const styles = StyleSheet.create({
     fontSize: 20
   }
 });
-export default MovieItemDetails;
+
+const mapStateToProps = state => ({
+  movie: state.movieDetails.movie,
+  movieUserData: state.movieDetails.movieUserData,
+  isLoading: state.movieDetails.isLoading
+});
+export default connect(mapStateToProps, { rateMovie, unrateMovie })(
+  MovieItemDetails
+);

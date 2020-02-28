@@ -18,6 +18,7 @@ const MovieListItem = ({ moviesList }) => {
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   title: {
     marginTop: 10,

@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Text, Image, Overlay } from 'react-native-elements';
+import { connect } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
 import { colors } from '../theme';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { loadDetails } from '../actions/movies';
 import { composePictureUrl } from '../api/movielens';
 import MovieItemDetails from './MovieItemDetails';
 import MovielensRating from './common/MovielensRating';
 import UserRating from './common/UserRating';
 
-const MovieItem = ({ movieData }) => {
+const MovieItem = ({ movieData, loadDetails }) => {
   const [isShowingDetails, setIsShowingDetails] = useState(false);
   return (
     <View style={styles.mainContainer}>
@@ -23,7 +25,8 @@ const MovieItem = ({ movieData }) => {
       </Overlay>
 
       <TouchableOpacity
-        onPress={() => {
+        onPress={async () => {
+          loadDetails(movieData.movie.movieId);
           setIsShowingDetails(true);
         }}
       >
@@ -66,4 +69,5 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between'
   }
 });
-export default MovieItem;
+
+export default connect(null, { loadDetails })(MovieItem);

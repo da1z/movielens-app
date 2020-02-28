@@ -68,6 +68,10 @@ export function getFrontpage(cookie) {
   return get(cookie, 'users/me/frontpage').then(r => r.data);
 }
 
+export function getMovie(cookie, movieId) {
+  return get(cookie, `movies/${movieId}`)
+}
+
 export function getGenres(cookie) {
   return get(cookie, 'movies/genres');
 }
@@ -150,16 +154,13 @@ export function getMyStats(cookie) {
   return get(cookie, 'users/me/ratings/stats');
 }
 
-export function rate(cookie, movieData, newRating) {
-  const {
-    movie: { movieId },
-    movieUserData: { prediction, rating }
-  } = movieData;
+export function rate(cookie, {movieId, rating, prediction, previousRating}) {
+
   return post(cookie, 'users/me/ratings', {
     movieId,
-    rating: newRating,
+    rating: rating,
     predictedRating: prediction,
-    previousRating: rating
+    previousRating: previousRating
   });
 }
 
