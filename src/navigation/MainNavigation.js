@@ -5,6 +5,7 @@ import HomeScreen from '../screens/HomeScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import { Ionicons } from '@expo/vector-icons';
 import TopPicksScreen from '../screens/TopPicksScreen';
+import SearchScreen from '../screens/SearchScreen';
 const MainNavigation = createBottomTabNavigator();
 
 export default () => {
@@ -26,6 +27,16 @@ export default () => {
           title: 'Picks',
           tabBarIcon: ({ focused, color, size }) => (
             <Ionicons name="ios-podium" size={size} color={color}></Ionicons>
+          )
+        }}
+      ></MainNavigation.Screen>
+      <MainNavigation.Screen
+        name="Search"
+        component={SearchScreen}
+        options={{
+          title: 'Picks',
+          tabBarIcon: ({ focused, color, size }) => (
+            <Ionicons name="ios-search" size={size} color={color}></Ionicons>
           )
         }}
       ></MainNavigation.Screen>
