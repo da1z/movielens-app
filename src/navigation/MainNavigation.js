@@ -34,7 +34,6 @@ export default () => {
         name="Search"
         component={SearchScreen}
         options={{
-          title: 'Picks',
           tabBarIcon: ({ focused, color, size }) => (
             <Ionicons name="ios-search" size={size} color={color}></Ionicons>
           )

@@ -38,7 +38,7 @@ const MoviesGrid = ({ title, dataLoader }) => {
       <Text style={styles.title}>{title}</Text>
       <FlatList
         showsVerticalScrollIndicator={false}
-        style={styles.list}
+        columnWrapperStyle={styles.columnWrapperStyle}
         numColumns={Math.floor(Dimensions.get('window').width / 120)}
         keyExtractor={item => item.movie.movieId.toString()}
         data={data}
@@ -59,8 +59,9 @@ const styles = StyleSheet.create({
     fontSize: 22,
     alignSelf: 'center'
   },
-  list: {
-    alignSelf: 'center'
+  columnWrapperStyle: {
+    marginBottom: 10
+    // alignSelf: 'center'
   }
 });
 

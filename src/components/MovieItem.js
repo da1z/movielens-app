@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Text, Image, Overlay } from 'react-native-elements';
 import { connect } from 'react-redux';
-import { Ionicons } from '@expo/vector-icons';
-import { colors } from '../theme';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { loadDetails } from '../actions/movies';
 import { composePictureUrl } from '../api/movielens';
@@ -53,7 +51,8 @@ const MovieItem = ({ movieData, loadDetails }) => {
 
 const styles = StyleSheet.create({
   mainContainer: {
-    marginHorizontal: 5
+    marginHorizontal: 5,
+    flex: 1
   },
   pictureContainer: {
     width: 110,

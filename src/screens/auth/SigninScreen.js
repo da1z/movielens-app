@@ -4,6 +4,7 @@ import { StyleSheet, View } from 'react-native';
 import { Input, Button } from '../../components';
 import { Text } from 'react-native-elements';
 import { authenticate } from '../../actions/auth';
+import { colors } from '../../theme';
 
 const SigninScreen = ({ isLoading, ...props }) => {
   const [username, setUsername] = useState('');
@@ -54,7 +55,7 @@ const styles = StyleSheet.create({
     fontSize: 24
   },
   greeting2: {
-    color: '#666',
+    color: colors.textColor2,
     fontSize: 24,
     marginTop: 5
   },

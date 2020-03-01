@@ -67,14 +67,16 @@ const MovieItemDetails = ({
         </TouchableText>
       ) : null}
       <Text>{movie.plotSummary}</Text>
-      <Text>
+      <Text style={styles.nonImportantInfo}>
         Cast:{' '}
         {(movie.actors.length > 5
           ? movie.actors.slice(0, 5)
           : movie.actors
         ).join(', ')}
       </Text>
-      <Text>Directors: {movie.directors.join(', ')}</Text>
+      <Text style={styles.nonImportantInfo}>
+        Directors: {movie.directors.join(', ')}
+      </Text>
     </ScrollView>
   );
 };
@@ -118,6 +120,9 @@ const styles = StyleSheet.create({
   },
   unrateText: {
     fontSize: 20
+  },
+  nonImportantInfo: {
+    color: colors.textColor2
   }
 });
 
