@@ -64,7 +64,7 @@ export const unrateMovie = movieId => dispatch => {
 export const searchMovie = (searchTerm, page = 1) => dispatch => {
   dispatch({ type: SEARCH_MOVIES });
   explore(null, { q: searchTerm, page })
-    .then(r => dispatch({ type: SEARCH_MOVIES_SUCCESS, payload: r }))
+    .then(r => dispatch({ type: SEARCH_MOVIES_SUCCESS, payload: r.data }))
     .catch(e => dispatch({ type: SEARCH_MOVIES_FAILURE, payload: e.message }));
 };
 

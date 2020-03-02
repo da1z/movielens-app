@@ -5,7 +5,9 @@ const TopPicksScreen = ({ params }) => {
   return (
     <MoviesGrid
       title="Top Picks"
-      dataLoader={page => topPicks(null, { page })}
+      dataLoader={page =>
+        topPicks(null, { page }).then(r => r.data.searchResults)
+      }
     ></MoviesGrid>
   );
 };

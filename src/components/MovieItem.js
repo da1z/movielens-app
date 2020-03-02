@@ -52,7 +52,7 @@ const MovieItem = ({ movieData, loadDetails, style }) => {
 const styles = StyleSheet.create({
   mainContainer: {
     marginHorizontal: 5,
-    flex: 1
+    flex: 1 / 3
   },
   pictureContainer: {
     aspectRatio: 2 / 3,

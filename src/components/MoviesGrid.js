@@ -16,15 +16,15 @@ const MoviesGrid = ({ title, dataLoader }) => {
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const [loadedPages, setLoadedPages] = useState([0]);
-
   useEffect(() => {
     if (loadedPages.includes(page)) return;
     setLoadedPages([...loadedPages, page]);
-    dataLoader(page).then(r => {
+
+    dataLoader(page).then(searchResult => {
       if (data.length === 0) {
-        setData(r.data.searchResults);
+        setData(searchResult);
       } else {
-        setData(data.concat(r.data.searchResults));
+        setData(data.concat(searchResult));
       }
       //TODO error handling
       setIsLoading(false);
@@ -44,7 +44,6 @@ const MoviesGrid = ({ title, dataLoader }) => {
         data={data}
         renderItem={({ item }) => <MovieItem movieData={item}></MovieItem>}
         onEndReached={() => {
-          console.log('set page', page + 1);
           setPage(page + 1);
         }}
         onEndReachedThreshold={0.5}
