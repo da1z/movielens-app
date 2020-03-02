@@ -9,10 +9,10 @@ import MovieItemDetails from './MovieItemDetails';
 import MovielensRating from './common/MovielensRating';
 import UserRating from './common/UserRating';
 
-const MovieItem = ({ movieData, loadDetails }) => {
+const MovieItem = ({ movieData, loadDetails, style }) => {
   const [isShowingDetails, setIsShowingDetails] = useState(false);
   return (
-    <View style={styles.mainContainer}>
+    <View style={[styles.mainContainer, style]}>
       <Overlay isVisible={isShowingDetails} fullScreen animationType={'fade'}>
         <SafeAreaView>
           <MovieItemDetails
@@ -55,7 +55,6 @@ const styles = StyleSheet.create({
     flex: 1
   },
   pictureContainer: {
-    width: 110,
     aspectRatio: 2 / 3,
     justifyContent: 'center',
     borderWidth: 0.5
@@ -65,8 +64,7 @@ const styles = StyleSheet.create({
   },
   ratingContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: 110
+    justifyContent: 'space-between'
   }
 });
 

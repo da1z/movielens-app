@@ -11,7 +11,12 @@ const MovieListItem = ({ moviesList }) => {
       <FlatList
         data={moviesList.searchResults}
         keyExtractor={item => item.movieId.toString()}
-        renderItem={({ item }) => <MovieItem movieData={item}></MovieItem>}
+        renderItem={({ item }) => (
+          <MovieItem
+            style={{ flex: 0, width: 130 }}
+            movieData={item}
+          ></MovieItem>
+        )}
         horizontal
         showsHorizontalScrollIndicator={false}
       ></FlatList>

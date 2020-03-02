@@ -29,7 +29,7 @@ class HomeScreen extends Component {
 
   render() {
     const { isLoading, moviesData } = this.props;
-    
+
     if (this.state.isFirstLoad && isLoading) return <ActivityIndicator />;
 
     return (
