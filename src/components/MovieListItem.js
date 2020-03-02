@@ -12,10 +12,7 @@ const MovieListItem = ({ moviesList }) => {
         data={moviesList.searchResults}
         keyExtractor={item => item.movieId.toString()}
         renderItem={({ item }) => (
-          <MovieItem
-            style={{ flex: 0, width: 130 }}
-            movieData={item}
-          ></MovieItem>
+          <MovieItem style={styles.movieItem} movieData={item}></MovieItem>
         )}
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -32,6 +29,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     color: colors.primary,
     textTransform: 'capitalize'
-  }
+  },
+  movieItem: { flex: 0, width: 130 }
 });
 export default MovieListItem;
